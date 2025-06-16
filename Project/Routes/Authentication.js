@@ -39,3 +39,14 @@ router.get('/protected', async (req, res) => {
 });
 
 module.exports = router;
+const passport = require('passport');
+
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    res.send('Logged in with Google');
+  }
+);
